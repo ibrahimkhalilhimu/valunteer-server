@@ -66,6 +66,9 @@ app.delete('/delete/:id',(req,res)=>{
   
 })
 
+app.get('/', function (req, res) {
+  res.send('hello world')
+})
 
 
 console.log('connect');
