@@ -39,6 +39,14 @@ app.get('/valunteers', (req, res) => {
 })
 
 
+app.get('/tasks', (req, res) => {
+  const filter = req.query.filter
+  valunteerCollection.find({valunteers:{$regex: filter}})
+  .toArray( (err, documents) => {
+      res.send(documents);
+  })
+})
+
 
 app.post('/addRegister', (req, res) => {
   const register = req.body;
@@ -47,11 +55,14 @@ app.post('/addRegister', (req, res) => {
   .then(result => {
       console.log(result.insertedCount);
       res.send(result.insertedCount>0)
+       .toArray( (err, documents) => {
+      res.send(documents);
+  })
   })
 })
 
 app.get('/register', (req, res) => {
-  registerCollection.find({})
+  registerCollection.find({email:req.query.email})
   .toArray( (err, documents) => {
       res.send(documents);
   })
